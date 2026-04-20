@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option C — Grande Aventure du Sud · Costa Rica 2027</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --jungle: #1b4a2e;
+    --jungle-mid: #2c7a4b;
+    --jungle-light: #3da068;
+    --jungle-pale: #e2f0e8;
+    --rust: #b84c2a;
+    --rust-light: #e8724e;
+    --amber: #c97c1a;
+    --ivory: #f8f4ec;
+    --dark: #111a14;
+    --text: #1e2e22;
+    --muted: #607068;
+    --white: #fff;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--ivory);
+    color: var(--text);
+    width: 900px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--jungle);
+    padding: 50px 52px 42px;
+    position: relative; overflow: hidden;
+  }
+  .header-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1200') center 30%/cover;
+    opacity: 0.15;
+  }
+  .header-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(17,26,20,0.92) 0%, rgba(43,120,74,0.6) 100%);
+  }
+  .h-inner { position: relative; z-index: 1; }
+  .option-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--rust); color: #fff;
+    font-size: 10px; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; padding: 5px 14px; border-radius: 4px;
+    margin-bottom: 18px;
+  }
+  .header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 50px; font-weight: 800;
+    color: #fff; line-height: 1.0;
+    margin-bottom: 6px; text-transform: uppercase;
+    letter-spacing: -.01em;
+  }
+  .header h1 .accent { color: #7de8a8; }
+  .header-sub { font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 300; margin-bottom: 26px; }
+  .h-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+  .h-pill {
+    font-size: 12px; padding: 5px 13px; border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.8);
+  }
+  .h-pill-special { background: rgba(125,232,168,0.15); border-color: rgba(125,232,168,0.35); color: #7de8a8; }
+
+  /* EXPERT STRIP -->
+  .expert-strip {
+    background: var(--rust); padding: 12px 52px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .e-icon { font-size: 20px; }
+  .e-text { font-size: 13px; color: #fff; font-weight: 400; }
+  .e-text strong { font-weight: 600; }
+
+  /* MAP + ROUTE */
+  .main-section {
+    background: var(--white); padding: 40px 52px;
+    display: flex; gap: 36px; align-items: flex-start;
+  }
+  .map-col { flex: 0 0 275px; }
+  #map-c { width: 275px; height: 420px; border-radius: 12px; z-index: 0; }
+  .route-col { flex: 1; }
+  .route-col h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--jungle); margin-bottom: 4px;
+    text-transform: uppercase; letter-spacing: .01em;
+  }
+  .route-tagline { font-size: 13px; color: var(--muted); font-weight: 300; margin-bottom: 22px; }
+  .stop-list { display: flex; flex-direction: column; }
+  .stop-item { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px dashed #d5e8da; }
+  .stop-item:last-child { border-bottom: none; }
+  .stop-num-col { display: flex; flex-direction: column; align-items: center; padding-top: 2px; }
+  .stop-num {
+    width: 26px; height: 26px; border-radius: 3px;
+    background: var(--jungle); color: #fff;
+    font-size: 10px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .stop-line { width: 1px; flex: 1; background: #b8d4be; margin-top: 4px; min-height: 12px; }
+  .stop-body { flex: 1; }
+  .stop-name { font-size: 14px; font-weight: 500; color: var(--dark); margin-bottom: 2px; }
+  .stop-sub { font-size: 11px; color: var(--rust); font-weight: 500; margin-bottom: 4px; }
+  .stop-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tag { font-size: 10px; padding: 2px 7px; border-radius: 3px; }
+  .tag-j { background: var(--jungle-pale); color: var(--jungle); }
+  .tag-r { background: #fde8e2; color: var(--rust); }
+  .tag-a { background: #fdefd8; color: var(--amber); }
+
+  /* PHOTOS */
+  .photos-section { padding: 0 52px 40px; background: var(--white); }
+  .photos-label { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 175px 145px;
+    gap: 8px;
+  }
+  .photo { border-radius: 8px; overflow: hidden; position: relative; background: #b8d4be; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo.tall { grid-row: span 2; }
+  .photo-cap {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.65));
+    color: #fff; font-size: 10px; padding: 20px 10px 8px;
+  }
+
+  /* HIGHLIGHTS */
+  .highlights-section { padding: 36px 52px; background: var(--jungle-pale); }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--jungle); text-transform: uppercase;
+    letter-spacing: .04em; margin-bottom: 18px;
+  }
+  .h-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  .h-card {
+    background: #fff; border-radius: 8px; padding: 16px;
+    border-bottom: 3px solid var(--jungle-mid);
+  }
+  .h-icon { font-size: 22px; margin-bottom: 8px; }
+  .h-title { font-size: 12px; font-weight: 500; color: var(--dark); margin-bottom: 4px; }
+  .h-desc { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+  .h-card.featured { border-bottom-color: var(--rust); }
+
+  /* AUGUST NOTE -->
+  .august-note {
+    margin-top: 16px;
+    background: var(--jungle);
+    border-radius: 8px; padding: 16px 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .aug-icon { font-size: 28px; }
+  .aug-title { font-size: 13px; font-weight: 600; color: #7de8a8; margin-bottom: 5px; }
+  .aug-text { font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.55; }
+
+  /* BUDGET */
+  .budget-section { padding: 36px 52px; background: var(--white); }
+  .b-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 14px; }
+  .b-card { background: var(--ivory); border-radius: 8px; padding: 12px 10px; text-align: center; }
+  .b-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 5px; }
+  .b-val { font-size: 14px; font-weight: 500; color: var(--dark); }
+  .b-note { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .b-total {
+    background: var(--jungle); border-radius: 8px; padding: 16px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .bt-left { }
+  .bt-label { font-size: 13px; color: rgba(255,255,255,0.75); }
+  .bt-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .bt-val { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 700; color: #7de8a8; }
+
+  /* COMFORT */
+  .comfort-section {
+    padding: 20px 52px; background: #fff8ee;
+    border-top: 1px solid #fad88a;
+    display: flex; gap: 14px;
+  }
+  .c-icon { font-size: 26px; }
+  .c-title { font-size: 13px; font-weight: 500; color: #8b5e1a; margin-bottom: 4px; }
+  .c-text { font-size: 12px; color: #7a5522; line-height: 1.55; }
+
+  /* FOOTER */
+  .footer {
+    background: var(--dark); padding: 18px 52px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .f-brand { font-family: 'Syne', sans-serif; font-size: 14px; color: rgba(255,255,255,0.4); }
+  .f-slogan { font-size: 13px; color: #7de8a8; font-weight: 300; }
+  .f-tag { font-size: 11px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: .1em; }
+
+  /* BACK TO HOME */
+  .back-home {
+    position: fixed; top: 16px; left: 16px; z-index: 1000;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(15,29,20,0.82); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff; font-size: 13px; font-weight: 500;
+    padding: 9px 16px; border-radius: 24px;
+    text-decoration: none;
+    transition: background .15s, transform .15s;
+    font-family: "DM Sans", "Outfit", "Inter", sans-serif;
+  }
+  .back-home:hover { background: rgba(26,107,69,0.9); transform: translateY(-1px); }
+  .back-home .arrow { font-size: 15px; }
+</style>
+</head>
+<body>
+<a class="back-home" href="index.html"><span class="arrow">←</span> Retour aux options</a>
+
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-bg"></div>
+  <div class="header-overlay"></div>
+  <div class="h-inner">
+    <div class="option-badge">⭐ Le choix d'Alejandro · Option C · 19 nuits · Août 2027 (juin/juillet possible)</div>
+    <h1>Grande <span class="accent">Aventure</span><br>du Sud</h1>
+    <div class="header-sub">Pacuare → San Gerardo → Péninsule d'Osa → Uvita → Arenal · Off the beaten path !</div>
+    <div class="h-pills">
+      <span class="h-pill">✈️ Bruxelles → San José</span>
+      <span class="h-pill">👥 5 voyageurs</span>
+      <span class="h-pill">🗓️ Août 2027 (juin/juillet possible)</span>
+      <span class="h-pill h-pill-special">🐳 Baleines + Corcovado + Rafting</span>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERT STRIP -->
+<div class="expert-strip">
+  <div class="e-icon">🌿</div>
+  <div class="e-text"><strong>Le coup de cœur d'Alejandro :</strong> "C'est le Costa Rica que la plupart des touristes ne voient jamais. Moins de monde, plus de jungle, des souvenirs pour la vie. C'est ici que vit la vraie pura vida, mae !"</div>
+</div>
+
+<!-- MAP + ROUTE -->
+<div class="main-section">
+  <div class="map-col">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <div id="map-c"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+    (function(){
+      var map=L.map('map-c',{zoomControl:true,scrollWheelZoom:false,attributionControl:false}).setView([9.5,-84.0],7);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{maxZoom:14,subdomains:'abcd'}).addTo(map);
+      L.polyline([[9.93, -84.08], [9.83, -83.68], [8.7, -83.48], [9.14, -83.73], [10.46, -84.7], [9.93, -84.08]],{color:'#2c7a4b',weight:3,dashArray:'6,5',opacity:0.9}).addTo(map);
+      L.marker([9.93,-84.08],{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div style="width:26px;height:26px;border-radius:50%;background:#1b4a2e;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.4);">1</div>'})}).addTo(map).bindTooltip('SJO + Turrialba',{direction:'top',offset:[0,-14],opacity:0.95});
+      L.marker([9.83,-83.68],{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div style="width:26px;height:26px;border-radius:50%;background:#1b4a2e;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.4);">2</div>'})}).addTo(map).bindTooltip('San Gerardo',{direction:'top',offset:[0,-14],opacity:0.95});
+      L.marker([8.7,-83.48],{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div style="width:26px;height:26px;border-radius:50%;background:#b84c2a;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.4);">3</div>'})}).addTo(map).bindTooltip('Péninsule d\'Osa',{direction:'top',offset:[0,-14],opacity:0.95});
+      L.marker([9.14,-83.73],{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div style="width:26px;height:26px;border-radius:50%;background:#1b4a2e;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.4);">4</div>'})}).addTo(map).bindTooltip('Uvita',{direction:'top',offset:[0,-14],opacity:0.95});
+      L.marker([10.46,-84.7],{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div style="width:26px;height:26px;border-radius:50%;background:#c97c1a;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.4);">5</div>'})}).addTo(map).bindTooltip('Arenal',{direction:'top',offset:[0,-14],opacity:0.95});
+      L.marker([9.93,-84.08],{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div style="width:26px;height:26px;border-radius:50%;background:#607068;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.4);">6</div>'})}).addTo(map).bindTooltip('San José (départ)',{direction:'top',offset:[0,-14],opacity:0.95});
+      
+    })();
+    </script>
+  </div>
+
+  <div class="route-col">
+    <h2>Le Costa Rica<br>des initiés</h2>
+    <div class="route-tagline">Rafting + Quetzals + Corcovado + Baleines. Moins de touristes, plus de jungle. C'est le vrai truc, mae !</div>
+    <div class="stop-list">
+      <div class="stop-item">
+        <div class="stop-num-col"><div class="stop-num">1</div><div class="stop-line"></div></div>
+        <div class="stop-body">
+          <div class="stop-name">San José + Turrialba</div>
+          <div class="stop-sub">3 nuits · Arrivée + Rafting Pacuare</div>
+          <div class="stop-tags"><span class="tag tag-j">Rafting Pacuare</span><span class="tag tag-j">Volcan Turrialba</span><span class="tag tag-j">Lodge en jungle</span></div>
+        </div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num-col"><div class="stop-num">2</div><div class="stop-line"></div></div>
+        <div class="stop-body">
+          <div class="stop-name">San Gerardo de Dota</div>
+          <div class="stop-sub">2 nuits · Haute altitude · Forêt &amp; quetzals</div>
+          <div class="stop-tags"><span class="tag tag-j">Quetzal resplendissant</span><span class="tag tag-j">Pêche à la truite</span><span class="tag tag-a">Air de montagne frais</span></div>
+        </div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num-col"><div class="stop-num">3</div><div class="stop-line"></div></div>
+        <div class="stop-body">
+          <div class="stop-name">⭐ Péninsule d'Osa — Drake Bay</div>
+          <div class="stop-sub">5 nuits · Corcovado · Biodiversité maximale</div>
+          <div class="stop-tags"><span class="tag tag-r">Parc Corcovado</span><span class="tag tag-r">4 espèces de singes</span><span class="tag tag-r">Tapirs &amp; aras</span><span class="tag tag-j">Snorkeling Isla Caño</span></div>
+        </div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num-col"><div class="stop-num">4</div><div class="stop-line"></div></div>
+        <div class="stop-body">
+          <div class="stop-name">Uvita — Parc Marino Ballena</div>
+          <div class="stop-sub">3 nuits · Baleines à bosse (août !) + Plages</div>
+          <div class="stop-tags"><span class="tag tag-j">Observation des baleines 🐳</span><span class="tag tag-j">Queue de baleine (sable!)</span><span class="tag tag-j">Cascades</span></div>
+        </div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num-col"><div class="stop-num">5</div><div class="stop-line"></div></div>
+        <div class="stop-body">
+          <div class="stop-name">Arenal / La Fortuna</div>
+          <div class="stop-sub">4 nuits · Volcan &amp; détente finale</div>
+          <div class="stop-tags"><span class="tag tag-a">Sources chaudes</span><span class="tag tag-j">Tyrolienne</span><span class="tag tag-j">Lac Arenal</span></div>
+        </div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num-col"><div class="stop-num">6</div></div>
+        <div class="stop-body">
+          <div class="stop-name">San José — Départ</div>
+          <div class="stop-sub">2 nuits · Derniers repas &amp; souvenirs</div>
+          <div class="stop-tags"><span class="tag tag-a">Mercado Central</span><span class="tag tag-a">Grano de Oro</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHOTOS -->
+<div class="photos-section">
+  <div class="photos-label">Voilà ce qui vous attend, compa !</div>
+  <div class="photo-grid">
+    <div class="photo tall">
+      <img src="https://images.pexels.com/photos/1108117/pexels-photo-1108117.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Osa Peninsula rainforest">
+      <div class="photo-cap">⭐ Péninsule d'Osa — jungle primaire</div>
+    </div>
+    <div class="photo">
+      <img src="https://images.pexels.com/photos/2356059/pexels-photo-2356059.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Pacuare rafting">
+      <div class="photo-cap">Rafting Pacuare — adrénaline !</div>
+    </div>
+    <div class="photo">
+      <img src="https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Costa Rica wildlife">
+      <div class="photo-cap">Faune incroyable · 4 espèces de singes</div>
+    </div>
+    <div class="photo">
+      <img src="https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Uvita whale tail beach">
+      <div class="photo-cap">🐳 Uvita — Queue de baleine + baleines en août</div>
+    </div>
+    <div class="photo">
+      <img src="https://images.pexels.com/photos/3225531/pexels-photo-3225531.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Cloud forest San Gerardo">
+      <div class="photo-cap">San Gerardo · Quetzal country</div>
+    </div>
+  </div>
+</div>
+
+<!-- HIGHLIGHTS -->
+<div class="highlights-section">
+  <div class="section-title">Pourquoi cette option est spéciale 🌿</div>
+  <div class="h-grid">
+    <div class="h-card featured">
+      <div class="h-icon">🌿</div>
+      <div class="h-title">Corcovado — La Mecque de la biodiversité</div>
+      <div class="h-desc">National Geographic l'appelle "l'endroit le plus biologiquement intense de la planète". Les 4 espèces de singes du CR, des tapirs, des jaguars, des aras. Ça n'existe nulle part ailleurs, bro !</div>
+    </div>
+    <div class="h-card featured">
+      <div class="h-icon">🐳</div>
+      <div class="h-title">Baleines à bosse à Uvita (août !)</div>
+      <div class="h-desc">Août = peak season pour les baleines à bosse dans le Parc Marino Ballena. Mères et baleineaux à quelques mètres du bateau. Un spectacle que Dorothea ne va pas oublier !</div>
+    </div>
+    <div class="h-card">
+      <div class="h-icon">🚣</div>
+      <div class="h-title">Rafting sur le Pacuare</div>
+      <div class="h-desc">L'une des 10 meilleures rivières de rafting au monde selon National Geographic. Jungle dense, rapides épiques, et un lodge accessible uniquement par radeau.</div>
+    </div>
+    <div class="h-card">
+      <div class="h-icon">🦜</div>
+      <div class="h-title">Quetzal resplendissant</div>
+      <div class="h-desc">San Gerardo de Dota est le meilleur endroit au monde pour observer ce "dieu des oiseaux" maya. Rare, coloré, et absolument spectaculaire.</div>
+    </div>
+    <div class="h-card">
+      <div class="h-icon">🏝️</div>
+      <div class="h-title">Isla del Caño — Snorkeling</div>
+      <div class="h-desc">Réserve marine près de l'Osa avec des eaux cristallines, des tortues marines, des raies et des dauphins. On se croirait dans un autre monde, mae !</div>
+    </div>
+    <div class="h-card">
+      <div class="h-icon">♨️</div>
+      <div class="h-title">Arenal — L'atterrissage en douceur</div>
+      <div class="h-desc">Après l'intensité de l'Osa, Arenal offre une fin de voyage parfaite : sources chaudes volcaniques, bon hôtel, tyrolienne et couchers de soleil sur le lac. Pura vida !</div>
+    </div>
+  </div>
+  <div class="august-note">
+    <div class="aug-icon">☀️</div>
+    <div>
+      <div class="aug-title">Août 2027 (juin/juillet possible) — La combinaison parfaite</div>
+      <div class="aug-text">C'est le moment idéal pour cet itinéraire : baleines à bosse à Uvita (août–octobre), Corcovado à son plus luxuriant, et la rivière Pacuare au plus fort de son débit pour le rafting. En plus, moins de touristes qu'en saison sèche et des prix 20–30% inférieurs. Win-win, compa !</div>
+    </div>
+  </div>
+</div>
+
+<!-- BUDGET -->
+<div class="budget-section">
+  <div class="section-title" style="font-size:18px;margin-bottom:18px">💰 Budget estimé · 5 personnes · 19 nuits</div>
+  <div class="b-grid">
+    <div class="b-card"><div class="b-label">Vols</div><div class="b-val">€650–850</div><div class="b-note">p.p. BRU→SJO A/R</div></div>
+    <div class="b-card"><div class="b-label">Hébergement</div><div class="b-val">€90–150</div><div class="b-note">éco-lodges Osa inclus</div></div>
+    <div class="b-card"><div class="b-label">Alimentation</div><div class="b-val">€35–55</div><div class="b-note">p.p./jour</div></div>
+    <div class="b-card"><div class="b-label">Activités</div><div class="b-val">€600–900</div><div class="b-note">Guide Corcovado obligatoire</div></div>
+    <div class="b-card"><div class="b-label">Transport</div><div class="b-val">€1 600–2 400</div><div class="b-note">1 van 9 places + bateau Osa</div></div>
+  </div>
+  <div class="b-total">
+    <div class="bt-left">
+      <div class="bt-label">Total estimé par personne</div>
+      <div class="bt-sub">Vols inclus · saison verte · 19 nuits · Osa eco-lodges variables</div>
+    </div>
+    <div><div class="bt-val">€3 600 – 5 000</div></div>
+  </div>
+</div>
+
+<!-- COMFORT -->
+<div class="comfort-section">
+  <div class="c-icon">🌸</div>
+  <div>
+    <div class="c-title">Note confort — soyons honnêtes, mae !</div>
+    <div class="c-text">Cette option est la plus aventureuse. L'Osa demande quelques concessions : éco-lodges avec confort de base mais douches chaudes (on peut choisir des lodges mid-range comme Casa Corcovado). Les routes vers l'Osa sont parfois difficiles — van 4x4 indispensable. <strong>La bonne nouvelle :</strong> Turrialba, San Gerardo, Uvita et Arenal ont d'excellents hôtels de confort. On peut équilibrer : lodges confortables partout SAUF à l'Osa où le côté "aventure" est justement l'expérience ! Dorothea, tu ne vas pas le regretter, compa !</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="f-brand">COSTA RICA 2027</div>
+  <div class="f-slogan">🌿 La vraie Pura Vida — là où les touristes ne vont pas</div>
+  <div class="f-tag">Option C de 3</div>
+</div>
+
+</body>
+</html>
